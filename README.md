@@ -2,6 +2,15 @@
 
 ## Introduction
 
+## Components of Earth Engine Code Editor Interface
+Detailed information can be found in [https://developers.google.com/earth-engine/guides/playground]
+
+<p align="center">
+  <img src="https://developers.google.com/static/earth-engine/images/Code_editor_diagram.png">
+  Diagram of components of the Earth Engine Code Editor at code.earthengine.google.com.
+</p>
+
+
 ## Upload Shapefiles to GEE
 1. Ensure that the shapefile contains all necessary associated files (.shp, .shx, .dbf, .prj). Also, ensure that the shapefile is projected in a supported coordinate reference system (e.g., WGS84, EPSG:4326).
 2. Create a compressed file (.zip) containing all shapefile associated files.
