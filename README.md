@@ -7,7 +7,8 @@ Detailed information can be found in [https://developers.google.com/earth-engine
 
 <p align="center">
   <img src="https://developers.google.com/static/earth-engine/images/Code_editor_diagram.png">
-  Diagram of components of the Earth Engine Code Editor at code.earthengine.google.com.
+  
+  Diagram of components of the Earth Engine Code Editor.
 </p>
 
 
