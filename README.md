@@ -31,6 +31,33 @@ Map.centerObject(shapefile,  10);
 
 ## Date
 
+```
+// Function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
+function formatDate(feature) {
+  var dateStr = ee.String(feature.get('date'));
+  
+  // Check if the month part has a single or double digit
+  var parts = dateStr.split('/');
+  var day = parts.get(0);
+  var month = parts.get(1);
+  var year = parts.get(2);
+  
+  // Format month to ensure it is two digits
+  var formattedMonth = ee.String(month).length().eq(1)
+    ? ee.String('0').cat(month)
+    : month;
+  
+  // Combine parts into a proper date string
+  var formattedDate = ee.String(year).cat('-').cat(formattedMonth).cat('-').cat(day);
+  
+  return feature.set('formatted_date', formattedDate);
+}
+
+// Apply the formatting function to all features
+points = points.map(formatDate);
+```
+
+
 ## Examples of Scripts
 1. To calculate the average precipitation by are of interest (in polygon) and months
 2. To calculate the daily precipitation by location (in points)
