@@ -43,6 +43,8 @@ print('Date Example:', dateExample)
 
 ```
 
+### Extracting Date Information from ee.FeatureCollection Object
+Note that ee.FeatureCollection object contains tabulated data equivalent to attribute table (in QGIS) and dataframe (in R and Pandas).
 
 ```
 // Function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
@@ -69,6 +71,16 @@ function formatDate(feature) {
 // Apply the formatting function to all features
 points = points.map(formatDate);
 ```
+
+
+
+
+### Filtering by Specific Date
+```
+var singleDay = collection.filterDate('2023-06-15', '2023-06-16');
+print('Single Day Collection:', singleDay);
+```
+
 
 
 ## Examples of Scripts
