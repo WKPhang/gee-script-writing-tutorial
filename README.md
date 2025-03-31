@@ -29,7 +29,20 @@ Map.centerObject(shapefile,  10);
 ```
 
 
-## Date
+## Working with Date
+GEE requires dates to be in the YYYY-MM-DD format when specified as a string. However, it is recommended to use the ee.Date object for better handling and manipulation of time-based data.
+
+Example:
+```
+var dateExample = ee.Date('2023-01-01');
+print('Date Example:', dateExample)
+
+// Console:
+// Date Example:
+// Date (2023-01-01 00:00:00)
+
+```
+
 
 ```
 // Function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
