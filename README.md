@@ -45,9 +45,10 @@ print('Date Example:', dateExample)
 
 ### Extracting Date Information from ee.FeatureCollection Object
 Note that ee.FeatureCollection object contains tabulated data equivalent to attribute table (in QGIS) and dataframe (in R and Pandas).
+Given the presence of feature with date information in ee.FeatureCollection, we can extract the date information from this feature. Below is the example on we can write a function to extract date in  DD/MM/YYYY and DD/M/YYYY formats (eg. 01/05/1998 or 01/5/1998).
 
 ```
-// Function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
+// Create function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
 function formatDate(feature) {
   var dateStr = ee.String(feature.get('date'));
   
