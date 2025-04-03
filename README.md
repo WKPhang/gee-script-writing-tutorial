@@ -3,7 +3,7 @@
 ## Introduction
 
 ## Components of Earth Engine Code Editor Interface
-Detailed information can be found in [https://developers.google.com/earth-engine/guides/playground]
+Detailed information can be found in https://developers.google.com/earth-engine/guides/playground
 
 <p align="center">
   <img src="https://developers.google.com/static/earth-engine/images/Code_editor_diagram.png">
@@ -44,9 +44,45 @@ print('Date Example:', dateExample)
 ```
 
 ### Extracting Date Information from ee.FeatureCollection Object
-Note that ee.FeatureCollection object contains tabulated data equivalent to attribute table (in QGIS) and dataframe (in R and Pandas).
-Given the presence of feature with date information in ee.FeatureCollection, we can extract the date information from this feature. Below is the example on we can write a function to extract date in  DD/MM/YYYY and DD/M/YYYY formats (eg. 01/05/1998 or 01/5/1998).
+In Google Earth Engine (GEE), an ee.FeatureCollection object contains tabulated data similar to an attribute table in QGIS or a dataframe in R and Pandas. This means that features within an ee.FeatureCollection can store various attributes, including date information.
 
+When working with date attributes, we often need to ensure that they follow a consistent format. Below, we demonstrate how to extract and reformat date information from an ee.FeatureCollection object. Specifically, we handle date formats in both DD/MM/YYYY and DD/M/YYYY formats (e.g., 01/05/1998 or 01/5/1998).
+
+```
+// Sample FeatureCollection with date attributes in mixed formats
+var points = ee.FeatureCollection([
+  ee.Feature(ee.Geometry.Point([101.6869, 3.1390]), {'date': '01/5/1998'}),
+  ee.Feature(ee.Geometry.Point([100.5018, 13.7563]), {'date': '12/11/2005'}),
+  ee.Feature(ee.Geometry.Point([103.8198, 1.3521]), {'date': '5/3/2012'})
+]);
+
+// Function to parse and format the date
+function formatDate(feature) {
+  var dateStr = ee.String(feature.get('date'));
+  
+  // Split date into day, month, and year components
+  var parts = dateStr.split('/');
+  var day = parts.get(0);
+  var month = parts.get(1);
+  var year = parts.get(2);
+  
+  // Ensure month is two digits (e.g., 5 → 05)
+  var formattedMonth = ee.String(month).length().eq(1)
+    ? ee.String('0').cat(month)
+    : month;
+  
+  // Construct the formatted date string in YYYY-MM-DD format
+  var formattedDate = ee.String(year).cat('-').cat(formattedMonth).cat('-').cat(day);
+  
+  return feature.set('formatted_date', formattedDate);
+}
+
+// Apply the formatting function to all features in the collection
+var formattedPoints = points.map(formatDate);
+
+// Print the results
+print("Formatted FeatureCollection:", formattedPoints);
+```
 ```
 // Create function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
 function formatDate(feature) {
