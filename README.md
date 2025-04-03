@@ -49,7 +49,7 @@ In Google Earth Engine (GEE), an ee.FeatureCollection object contains tabulated 
 When working with date attributes, we often need to ensure that they follow a consistent format. Below, we demonstrate how to extract and reformat date information from an ee.FeatureCollection object. Specifically, we handle date formats in both DD/MM/YYYY and DD/M/YYYY formats (e.g., 01/05/1998 or 01/5/1998).
 
 ```
-// Sample FeatureCollection with date attributes in mixed formats
+// Create sample point FeatureCollection with date attributes in mixed formats
 var points = ee.FeatureCollection([
   ee.Feature(ee.Geometry.Point([101.6869, 3.1390]), {'date': '01/5/1998'}),
   ee.Feature(ee.Geometry.Point([100.5018, 13.7563]), {'date': '12/11/2005'}),
@@ -70,8 +70,8 @@ function formatDate(feature) {
   var formattedMonth = ee.String(month).length().eq(1)
     ? ee.String('0').cat(month)
     : month;
-  
-  // Construct the formatted date string in YYYY-MM-DD format
+
+  // Combine date string components into a proper date string (YYYY-MM-DD) 
   var formattedDate = ee.String(year).cat('-').cat(formattedMonth).cat('-').cat(day);
   
   return feature.set('formatted_date', formattedDate);
@@ -83,34 +83,6 @@ var formattedPoints = points.map(formatDate);
 // Print the results
 print("Formatted FeatureCollection:", formattedPoints);
 ```
-```
-// Create function to parse and format the date, handling both DD/MM/YYYY and DD/M/YYYY formats
-function formatDate(feature) {
-  var dateStr = ee.String(feature.get('date'));
-  
-  // Check if the month part has a single or double digit
-  var parts = dateStr.split('/');
-  var day = parts.get(0);
-  var month = parts.get(1);
-  var year = parts.get(2);
-  
-  // Format month to ensure it is two digits
-  var formattedMonth = ee.String(month).length().eq(1)
-    ? ee.String('0').cat(month)
-    : month;
-  
-  // Combine parts into a proper date string
-  var formattedDate = ee.String(year).cat('-').cat(formattedMonth).cat('-').cat(day);
-  
-  return feature.set('formatted_date', formattedDate);
-}
-
-// Apply the formatting function to all features
-points = points.map(formatDate);
-```
-
-
-
 
 ### Filtering by Specific Date
 ```
